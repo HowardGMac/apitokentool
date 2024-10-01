@@ -4,7 +4,7 @@ import uuid
 import json
 import requests
 
-
+uuid_namespace = os.environ.get('uuid_namespace')
 jamf_server = os.environ.get('jamf_server')
 keyData = ast.literal_eval(os.environ.get('keyData'))
 
@@ -12,7 +12,7 @@ def lambda_handler(event, context):
     decodedEvent = json.loads(event['body'])
     received_token_key = str(decodedEvent['apiTokenKey'])
     print('Received request from computer with API Token Key ' + received_token_key)
-    computed_token_key = str(uuid.uuid5(uuid.NAMESPACE_DNS, 'laits.utexas.edu/' + received_token_key))
+    computed_token_key = str(uuid.uuid5(uuid.NAMESPACE_DNS, uuid_namespace + received_token_key))
     print ('The computed API Token Key is ' + computed_token_key)
     if computed_token_key in keyData:
         jamf_api_username = keyData[computed_token_key]['username']
