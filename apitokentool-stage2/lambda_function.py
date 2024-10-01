@@ -34,5 +34,5 @@ def lambda_handler(event, context):
         }
     else :
         return {
-            'statusCode': 404
+            'statusCode': 401
         }
